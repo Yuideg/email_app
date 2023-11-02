@@ -42,7 +42,7 @@ app.post('/api/send-email', async(req, res) => {
         await transporter.sendMail({
             from: process.env.SENDER_EMAIL_USERNAME,
             to: sender, 
-            subject: `Re: ${subject}\n`, // Subject line
+            subject: `New Message`, // Subject line
             text: `
                 Dear Sir/Medam,\n
                 Thank you for getting in touch with me. I will review your mail and will provide a thoughtful response shortly.\n
