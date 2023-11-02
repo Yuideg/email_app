@@ -34,11 +34,23 @@ app.post('/api/send-email', async(req, res) => {
     to: process.env.RECEIVER_EMAIL, // list of receivers
     subject: subject, // Subject line
     text: `New user ${sender} has sent you new message \n${message}`, // plain text body
-  }, (error, info) => {
+  }, async(error, info) => {
     if (error) {
       console.log(error);
       res.status(500).send('Email not sent');
     } else {
+        await transporter.sendMail({
+            from: process.env.SENDER_EMAIL_USERNAME,
+            to: sender, 
+            subject: `Re: ${subject}\n`, // Subject line
+            text: `
+                Dear Sir/Medam,\n
+                Thank you for getting in touch with me. I will review your mail and will provide a thoughtful response shortly.\n
+                Warm regards,\n
+                Yideg Misganaw
+            `, 
+          },)
+
       console.log('Email sent: ' + info.response);
       res.status(200).send('Email sent');
     }
