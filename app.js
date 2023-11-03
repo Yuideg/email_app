@@ -28,12 +28,12 @@ app.use(bodyParser.json());
 
 // Define a route for sending emails
 app.post('/api/send-email', async(req, res) => {
-    const {sender,subject,message}= req.body;
+    const {sender,subject,message,name}= req.body;
   await transporter.sendMail({
     from: process.env.SENDER_EMAIL_USERNAME, // sender address
     to: process.env.RECEIVER_EMAIL, // list of receivers
     subject: subject, // Subject line
-    text: `New user ${sender} has sent you new message \n${message}`, // plain text body
+    text: `New user ${name}[email:${sender}] has sent you new message \n${message}`, // plain text body
   }, async(error, info) => {
     if (error) {
       console.log(error);
@@ -44,7 +44,7 @@ app.post('/api/send-email', async(req, res) => {
             to: sender, 
             subject: `New Message`, // Subject line
             text: `
-                Dear Sir/Medam,\n
+                Dear ${name},\n
                 Thank you for getting in touch with me. I will review your mail and will provide a thoughtful response shortly.\n
                 Warm regards,\n
                 Yideg Misganaw
